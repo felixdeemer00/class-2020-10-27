@@ -15,7 +15,7 @@ library(tidyverse)
 
 week_8 <- trains %>% 
   mutate(att_chg = att_end - att_start) %>% 
-  select(att_chg, gender, party, treatment)
+  select(att_chg, gender, party, treatment, liberal)
   
 ```
 
@@ -30,12 +30,40 @@ Weeks 7, 8 and 9 are the core of the class. We have a question. We have some dat
 
 * `att_chg` as a function of `gender`
 
+```{r}
+
+gender_model <- stan_glm(att_chg ~ gender - 1,
+                   data = week_8,
+                   refresh = 0)
+
+# genderFemale is the average attitude change in females in the population
+# genderMale is the average attitude change in males in the population
+# model is predictive, as we cannot manipulate gender in this experiment
+
+```
 
 * `att_chg` as a function of `liberal`
 
+```{r}
+
+liberal_model <- stan_glm(att_chg ~ liberal - 1,
+                   data = week_8,
+                   refresh = 0)
+
+# liberalFalse has a median of -0.1, more likely to become conservative
+# liberalTrue less likely to change attitude at all
+
+```
 
 * `att_chg` as a function of `treatment`
 
+```{r}
+
+treatment_model <- stan_glm(att_chg ~ treatment - 1,
+                   data = week_8,
+                   refresh = 0)
+
+```
 
 
 
